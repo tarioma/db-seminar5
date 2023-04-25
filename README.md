@@ -69,11 +69,8 @@ BEGIN
   INSERT INTO Bank (Id, [Name])
     VALUES (@id, @name)
 END
-
 EXEC AddBank 1, N'Exim'
-SELECT * FROM Bank
 ```
-
 
 ```
 CREATE PROCEDURE UpdateBank
@@ -85,11 +82,8 @@ BEGIN
     SET [Name] = @name
   WHERE Id = @id
 END
-
 EXEC UpdateBank 1, N'EximUpdated'
-SELECT * FROM Bank
 ```
-
 
 ```
 CREATE PROCEDURE DeleteBank
@@ -99,7 +93,55 @@ BEGIN
   DELETE FROM Bank
     WHERE Id = @id
 END
-
 EXEC DeleteBank 1
-SELECT * FROM Bank
+```
+
+```
+CREATE PROCEDURE AddATM
+  @address AS VARCHAR(255),
+  @remainingCurrency AS MONEY,
+  @bankId AS INT
+AS
+BEGIN
+  INSERT INTO ATM ([Address], RemainingCurrency, BankId)
+    VALUES (@address, @remainingCurrency, @bankId)
+END
+EXEC AddATM N'Tiraspol', 16.35, 1
+```
+
+```
+CREATE PROCEDURE UpdateATMAddress
+  @number AS INT,
+  @address AS VARCHAR(255)
+AS
+BEGIN
+  UPDATE ATM
+    SET [Address] = @address
+  WHERE Number = @number
+END
+EXEC UpdateATMAddress 1, N'Bender'
+```
+
+```
+CREATE PROCEDURE UpdateATMRemainingCurrency
+  @number AS INT,
+  @remainingCurrency AS MONEY
+AS
+BEGIN
+  UPDATE ATM
+    SET RemainingCurrency = @remainingCurrency
+  WHERE Number = @number
+END
+EXEC UpdateATMRemainingCurrency 1, 16.30
+```
+
+```
+CREATE PROCEDURE DeleteATM
+  @number AS INT
+AS
+BEGIN
+  DELETE FROM ATM
+    WHERE Number = @number
+END
+EXEC DeleteATM 1
 ```
