@@ -145,3 +145,29 @@ BEGIN
 END
 EXEC DeleteATM 1
 ```
+
+#
+#### 3 задание
+Написать скалярную функцию, принимающую в качестве параметра название продукта, и возвращающую его количество во всех заказах.
+```
+CREATE FUNCTION GetProductsCountByProductName
+(
+  @queryProductName AS VARCHAR(255)
+)
+RETURNS INT
+AS
+BEGIN
+  DECLARE @productsCount AS INT;
+  SELECT @productsCount =
+    COUNT(*)
+  FROM
+    OrderItem
+    JOIN Product ON Product.Id = OrderItem.ProductId
+  WHERE
+    Product.ProductName = @queryProductName
+  RETURN @productsCount
+END
+
+SELECT dbo.GetProductsCountByProductName(N'Chang')
+```
+![изображение](https://user-images.githubusercontent.com/125894838/234368205-139e293e-134d-4d56-b6f3-493d98f1ab82.png)
